@@ -1,8 +1,9 @@
+import 'package:conectar_api/controllers/produtoController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
-
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -10,23 +11,22 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _formKey = GlobalKey<FormState>();
-
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _descricaoController = TextEditingController();
   final TextEditingController _precoController = TextEditingController();
 
+  var controllerProduto = ProdutoController.produtoController;
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
         title: Text("Formulario"),
       ),
-      body: Column(
+      body:
+      Obx(()=>
+      Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Form(
@@ -81,6 +81,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ElevatedButton(
                     onPressed: ()  {
 
+
+
+
+
                     },
                     child: const Text('Enviar'),
                   ),
@@ -90,6 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
         ],
+      )
       )
     );
   }
