@@ -1,7 +1,10 @@
 import 'package:conectar_api/screens/homeScreen.dart';
 import 'package:flutter/material.dart';
 
+import 'ControllerBinding.dart';
+
 void main() {
+  ControllerBinding().dependencies();
   runApp(const MyApp());
 }
 

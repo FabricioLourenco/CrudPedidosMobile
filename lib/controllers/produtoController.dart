@@ -8,8 +8,7 @@ class ProdutoController extends GetxController{
   ProdutoService _produtoService = ProdutoService();
 
   var isLoading = false.obs;
-  static ProdutoController get produtoController
-  => Get.find();
+  static ProdutoController get produtoController => Get.find();
 
   Future<dynamic> salvar (Produtomodel produtoModel) async{
     isLoading.value = true;

@@ -1,4 +1,5 @@
 import 'package:conectar_api/controllers/produtoController.dart';
+import 'package:conectar_api/models/ProdutoModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,6 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body:
       Obx(()=>
+        controllerProduto.isLoading.value?
+        Center(child: CircularProgressIndicator(),) :
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -79,7 +82,40 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(height: 20,),
                   ElevatedButton(
-                    onPressed: ()  {
+                    onPressed: ()  async {
+                        if(_formKey.currentState!.validate()){
+                          final produto = Produtomodel(
+                              nome: _nomeController.text,
+                              descricao: _descricaoController.text,
+                              preco: double.tryParse(_precoController.text) ?? 0.0
+                          );
+                          
+                         var response= true;
+                          // await controllerProduto.salvar(produto);
+                          
+                         if(response != null || response !=false){
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: 
+                                      Row(
+                                        children: [
+                                          Icon(Icons.check, color: Colors.white,),
+                                          SizedBox(width: 8,),
+                                          Expanded(
+                                            child: Text("Salvo com sucesso",
+                                            style: TextStyle(color: Colors.white),),
+                                          )
+                                        ],
+                                      ),
+                                backgroundColor: Colors.green,
+                                behavior: SnackBarBehavior.floating,
+                                duration: Duration(seconds: 2),
+                                margin: EdgeInsets.all(10),
+                              )
+                            );
+                         }
+                          
+                          
+                        }
 
 
 
