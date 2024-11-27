@@ -1,3 +1,4 @@
+import 'package:conectar_api/screens/ListaProdutoScreen.dart';
 import 'package:conectar_api/screens/homeScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),

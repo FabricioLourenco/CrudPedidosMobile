@@ -8,6 +8,7 @@ class ProdutoController extends GetxController{
   ProdutoService _produtoService = ProdutoService();
 
   var isLoading = false.obs;
+  var produtos = <Produtomodel>[].obs;
   static ProdutoController get produtoController => Get.find();
 
   Future<dynamic> salvar (Produtomodel produtoModel) async{
@@ -18,6 +19,25 @@ class ProdutoController extends GetxController{
     return resposta;
   }
 
-
+  Future<void> listarProdutos() async {
+    //indica que carregar é verdadeiro
+    isLoading.value = true;
+    try{
+      var lista = await _produtoService.listarProdutos();
+      if(lista != null){
+        produtos.assignAll(lista);
+      }
+      else{
+        produtos.clear();
+      }
+    }
+    catch(e){
+      produtos.clear();
+    }
+    finally {
+      isLoading.value = false;
+      update();
+    }
+  }
 
 }

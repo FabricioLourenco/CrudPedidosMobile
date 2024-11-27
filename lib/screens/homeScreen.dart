@@ -1,3 +1,4 @@
+import 'package:conectar_api/components/MenuComponent.dart';
 import 'package:conectar_api/controllers/produtoController.dart';
 import 'package:conectar_api/models/ProdutoModel.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text("Formulario"),
       ),
+      drawer: MenuComponent(),
       body:
       Obx(()=>
         controllerProduto.isLoading.value?
