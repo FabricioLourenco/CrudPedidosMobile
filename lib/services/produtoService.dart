@@ -10,7 +10,7 @@ class ProdutoService{
   }
 
   Future<dynamic> salvaProduto(Produtomodel produto) async{
-      _response = await http.post(Uri.parse(url),
+      _response = await http.post(Uri.parse("http://localhost:8080/produto/salvar"),
         body: json.encode(produto.toJson()),
         headers: {
           "Accept": "application/json",

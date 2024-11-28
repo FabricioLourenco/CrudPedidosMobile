@@ -1,5 +1,7 @@
 import 'package:conectar_api/components/MenuComponent.dart';
+import 'package:conectar_api/controllers/lojaController.dart';
 import 'package:conectar_api/controllers/produtoController.dart';
+import 'package:conectar_api/models/LojaModel.dart';
 import 'package:conectar_api/models/ProdutoModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,18 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _precoController = TextEditingController();
 
   var controllerProduto = ProdutoController.produtoController;
+  var controllerlLoja = LojaController.lojaController;
+  LojaModel? _lojaSelecionada;
 
+  @override
+  void initState(){
+    super.initState();
+    //Chama o metodo para listar produtos após
+    // a construção do widget
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      controllerlLoja.listarLojas();
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       if(value == null || value.isEmpty){
                         return 'Por favor, insira descrição produto';
                       }
-
                       return null;
                     },
                   ),
@@ -83,18 +95,50 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                   SizedBox(height: 20,),
+
+                  InputDecorator(
+                      decoration: InputDecoration(
+                        labelText: 'Selecione Loja',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                      ),
+                    child: DropdownButtonHideUnderline(
+                        child: DropdownButton<LojaModel>(
+                          value: _lojaSelecionada,
+                          hint: Text('Selecione uma loja'),
+                          isExpanded: true,
+                          onChanged: (LojaModel? loja){
+                            setState(() {
+                              _lojaSelecionada = loja;
+                            });
+                          },
+                          items: controllerlLoja.lojas.map(
+                              (LojaModel loja){
+                                return
+                                    DropdownMenuItem<LojaModel>(
+                                      value: loja,
+                                      child: Text(loja.razaoSocial),
+                                    );
+                              }).toList(),
+                          ),
+                        )
+                    ),
+
+
+                  SizedBox(height: 20,),
+
                   ElevatedButton(
                     onPressed: ()  async {
                         if(_formKey.currentState!.validate()){
                           final produto = Produtomodel(
+                              lojaId: _lojaSelecionada!.id,
                               nome: _nomeController.text,
                               descricao: _descricaoController.text,
                               preco: double.tryParse(_precoController.text) ?? 0.0
                           );
-                          
-                         var response= true;
-                          // await controllerProduto.salvar(produto);
-                          
+                         var response=
+                          await controllerProduto.salvar(produto);
                          if(response != null || response !=false){
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: 
@@ -115,14 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               )
                             );
                          }
-                          
-                          
                         }
-
-
-
-
-
                     },
                     child: const Text('Enviar'),
                   ),

@@ -33,18 +33,39 @@ class _ListaProdutoScreenState extends State<ListaProdutoScreen> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text("Lista Produtos"),
         ),
-         drawer: MenuComponent(),
+        drawer: MenuComponent(),
         body:
         Obx(()=>
         controllerProduto.isLoading.value?
         Center(child: CircularProgressIndicator(),) :
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
+              ListView.builder(
+                  itemCount: controllerProduto.produtos.length,
+                  itemBuilder: (context, index){
+                    final produto = controllerProduto.produtos[index];
+                    return Card(
+                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: ListTile(
+                        contentPadding: EdgeInsets.all(16),
+                        title: Text(
+                          produto.nome,
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                        subtitle: Text(
+                          produto.descricao
+                        ),
+                        trailing: Text(
+                          "R\$ ${produto.preco.toStringAsFixed(2)}"
+                        ),
+                      ),
+                    );
+                  }
+              )
 
 
-          ],
-        )
         )
     );
   }
