@@ -1,8 +1,9 @@
+import 'package:conectar_api/screens/ClienteScreen.dart';
+import 'package:conectar_api/screens/ListScreen.dart';
 import 'package:conectar_api/screens/homeScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/ListaProdutoScreen.dart';
 
 class MenuComponent extends StatelessWidget {
   @override
@@ -17,7 +18,7 @@ class MenuComponent extends StatelessWidget {
                 color: Colors.blue,
               ),
               child: Text(
-                'Menu Header',
+                'Menu',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -25,7 +26,7 @@ class MenuComponent extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: Text('Cadastra Produto'),
+              title: Text('Cadastra Pedido'),
               onTap: () {
                 // Handle item 1 tap
                 // Navigator.pop(context);
@@ -37,14 +38,26 @@ class MenuComponent extends StatelessWidget {
               },
             ),
             ListTile(
-              title: Text('Lista Produto'),
+              title: Text('Lista pedidos'),
               onTap: () {
                 // Handle item 1 tap
                 // Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) =>
-                      ListaProdutoScreen()),
+                      ListScreen()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Cadastrar Clientes'),
+              onTap: () {
+                // Handle item 1 tap
+                // Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>
+                      ClienteScreen()),
                 );
               },
             ),

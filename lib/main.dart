@@ -1,4 +1,3 @@
-import 'package:conectar_api/screens/ListaProdutoScreen.dart';
 import 'package:conectar_api/screens/homeScreen.dart';
 import 'package:flutter/material.dart';
 
